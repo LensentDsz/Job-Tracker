@@ -48,8 +48,10 @@ class JobTrackerHandler(SimpleHTTPRequestHandler):
             applications = read_applications()
             for item in applications:
                 if item.get("id") == item_id:
-                    if payload.get("status") in STATUSES:
-                        item["status"] = payload["status"]
+                    next_item = normalize_item({**item, **payload})
+                    next_item["id"] = item_id
+                    next_item["createdAt"] = item.get("createdAt") or next_item["createdAt"]
+                    item.update(next_item)
                     write_applications(applications)
                     self.send_json(item)
                     return

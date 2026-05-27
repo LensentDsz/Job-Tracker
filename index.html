@@ -13,9 +13,11 @@
           <p class="eyebrow">Job Tracker</p>
           <h1>投递记录</h1>
         </div>
-        <button class="icon-button" id="exportBtn" title="导出 CSV" aria-label="导出 CSV">
-          <span aria-hidden="true">↓</span>
-        </button>
+        <div class="topbar-actions">
+          <button class="icon-button" id="exportBtn" title="导出 CSV" aria-label="导出 CSV">
+            <span aria-hidden="true">↓</span>
+          </button>
+        </div>
       </section>
 
       <section class="stats" aria-label="统计">
@@ -110,6 +112,26 @@
           <option>已拒绝</option>
           <option>已放弃</option>
         </select>
+        <label>
+          开始日期
+          <input id="startDateFilter" type="date" />
+        </label>
+        <label>
+          结束日期
+          <input id="endDateFilter" type="date" />
+        </label>
+        <button class="ghost-button" id="clearFiltersBtn" type="button">清除</button>
+      </section>
+
+      <section class="panel map-panel" aria-label="投递路径图">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Flow Map</p>
+            <h2>投递路径图</h2>
+          </div>
+          <button id="downloadMapBtn" class="ghost-button" type="button">下载图像</button>
+        </div>
+        <div class="map-stage" id="mapStage"></div>
       </section>
 
       <section class="list" id="applicationList" aria-label="投递列表"></section>
@@ -139,10 +161,73 @@
         <p class="notes" data-field="notes"></p>
         <div class="card-actions">
           <select data-action="status"></select>
-          <a data-field="link" target="_blank" rel="noreferrer">打开职位</a>
+          <div class="action-row">
+            <button class="text-button" data-action="edit" type="button">编辑</button>
+            <a data-field="link" target="_blank" rel="noreferrer">打开职位</a>
+          </div>
         </div>
       </article>
     </template>
+
+    <dialog id="editDialog" class="edit-dialog">
+      <form id="editForm" class="dialog-card">
+        <div class="panel-heading">
+          <h2>编辑记录</h2>
+          <button class="delete-button" id="closeEditBtn" type="button" aria-label="关闭">×</button>
+        </div>
+        <input name="id" type="hidden" />
+        <label>
+          公司
+          <input name="company" required />
+        </label>
+        <label>
+          岗位
+          <input name="role" required />
+        </label>
+        <label>
+          投递日期
+          <input name="date" type="date" required />
+        </label>
+        <label>
+          渠道
+          <select name="source">
+            <option>LinkedIn</option>
+            <option>seek</option>
+            <option>猎聘</option>
+            <option>Boss直聘</option>
+            <option>官网</option>
+          </select>
+        </label>
+        <label>
+          状态
+          <select name="status">
+            <option>已投递</option>
+            <option>有回应</option>
+            <option>面试中</option>
+            <option>Offer</option>
+            <option>已拒绝</option>
+            <option>已放弃</option>
+          </select>
+        </label>
+        <label>
+          优先级
+          <select name="priority">
+            <option>高</option>
+            <option>中</option>
+            <option>低</option>
+          </select>
+        </label>
+        <label class="wide">
+          链接
+          <input name="link" type="url" />
+        </label>
+        <label class="wide">
+          备注
+          <textarea name="notes" rows="4"></textarea>
+        </label>
+        <button class="primary-button wide" type="submit">保存修改</button>
+      </form>
+    </dialog>
 
     <script src="./app.js"></script>
   </body>
