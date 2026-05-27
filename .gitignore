@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/*.json
+data/*.tmp
+_git_repo/
+.write-test

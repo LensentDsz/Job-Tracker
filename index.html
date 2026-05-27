@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>投递记录</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar" aria-label="总览">
+        <div>
+          <p class="eyebrow">Job Tracker</p>
+          <h1>投递记录</h1>
+        </div>
+        <button class="icon-button" id="exportBtn" title="导出 CSV" aria-label="导出 CSV">
+          <span aria-hidden="true">↓</span>
+        </button>
+      </section>
+
+      <section class="stats" aria-label="统计">
+        <article>
+          <span id="totalCount">0</span>
+          <p>总投递</p>
+        </article>
+        <article>
+          <span id="activeCount">0</span>
+          <p>进行中</p>
+        </article>
+        <article>
+          <span id="interviewCount">0</span>
+          <p>面试</p>
+        </article>
+        <article>
+          <span id="replyRate">0%</span>
+          <p>有回应</p>
+        </article>
+      </section>
+
+      <section class="panel entry-panel" aria-label="新增投递">
+        <div class="panel-heading">
+          <h2>新增投递</h2>
+          <button id="sampleBtn" class="ghost-button" type="button">示例</button>
+        </div>
+        <form id="applicationForm" class="form-grid">
+          <label>
+            公司
+            <input name="company" placeholder="例如 Canva" required />
+          </label>
+          <label>
+            岗位
+            <input name="role" placeholder="例如 Product Designer" required />
+          </label>
+          <label>
+            投递日期
+            <input name="date" type="date" required />
+          </label>
+          <label>
+            渠道
+            <select name="source">
+              <option>LinkedIn</option>
+              <option>seek</option>
+              <option>猎聘</option>
+              <option>Boss直聘</option>
+              <option>官网</option>
+            </select>
+          </label>
+          <label>
+            状态
+            <select name="status">
+              <option>已投递</option>
+              <option>有回应</option>
+              <option>面试中</option>
+              <option>Offer</option>
+              <option>已拒绝</option>
+              <option>已放弃</option>
+            </select>
+          </label>
+          <label>
+            优先级
+            <select name="priority">
+              <option>高</option>
+              <option selected>中</option>
+              <option>低</option>
+            </select>
+          </label>
+          <label class="wide">
+            链接
+            <input name="link" type="url" placeholder="职位链接，可选" />
+          </label>
+          <label class="wide">
+            备注
+            <textarea name="notes" rows="3" placeholder="投递版本、联系人、下一步提醒等"></textarea>
+          </label>
+          <button class="primary-button wide" type="submit">保存记录</button>
+        </form>
+      </section>
+
+      <section class="toolbar" aria-label="筛选">
+        <div class="search-wrap">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" placeholder="搜索公司、岗位、渠道、备注" />
+        </div>
+        <select id="statusFilter" aria-label="按状态筛选">
+          <option value="全部">全部状态</option>
+          <option>已投递</option>
+          <option>有回应</option>
+          <option>面试中</option>
+          <option>Offer</option>
+          <option>已拒绝</option>
+          <option>已放弃</option>
+        </select>
+      </section>
+
+      <section class="list" id="applicationList" aria-label="投递列表"></section>
+      <section class="empty-state" id="emptyState">
+        <h2>还没有记录</h2>
+        <p>先添加第一条投递，之后这里会自动按日期排序。</p>
+      </section>
+    </main>
+
+    <template id="applicationTemplate">
+      <article class="application-card">
+        <div class="card-main">
+          <div>
+            <div class="title-row">
+              <h3 data-field="role"></h3>
+              <span class="pill" data-field="status"></span>
+            </div>
+            <p class="company" data-field="company"></p>
+          </div>
+          <button class="delete-button" type="button" title="删除" aria-label="删除">×</button>
+        </div>
+        <div class="meta-row">
+          <span data-field="date"></span>
+          <span data-field="source"></span>
+          <span data-field="priority"></span>
+        </div>
+        <p class="notes" data-field="notes"></p>
+        <div class="card-actions">
+          <select data-action="status"></select>
+          <a data-field="link" target="_blank" rel="noreferrer">打开职位</a>
+        </div>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
